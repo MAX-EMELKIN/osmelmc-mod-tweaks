@@ -1,8 +1,8 @@
 <!DOCTYPE html>
-<html lang="ru">
+<html lang="ru" class="overflow-x-hidden">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
     <title>OsmelMC Mod Tweaks (2024-09-22) — База знаний и руководство</title>
     <!-- Tailwind CSS CDN -->
     <script src="https://cdn.tailwindcss.com"></script>
@@ -32,7 +32,9 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
 
     <style>
-        body {
+        html, body {
+            overflow-x: hidden;
+            width: 100%;
             font-family: 'Inter', sans-serif;
             background-color: #080b11;
             color: #e2e8f0;
@@ -41,113 +43,88 @@
             font-family: 'Cinzel', serif;
         }
         .glass-panel {
-            background: rgba(16, 21, 34, 0.85);
+            background: rgba(16, 21, 34, 0.9);
             backdrop-filter: blur(16px);
             border: 1px solid rgba(255, 255, 255, 0.08);
         }
-        .gold-glow {
-            text-shadow: 0 0 20px rgba(245, 158, 11, 0.35);
-        }
         .title-glow {
-            text-shadow: 0 0 30px rgba(99, 102, 241, 0.4);
+            text-shadow: 0 0 25px rgba(99, 102, 241, 0.35);
         }
-        ::-webkit-scrollbar {
-            width: 8px;
-            height: 8px;
+        /* Mobile friendly touch scroll */
+        .no-scrollbar::-webkit-scrollbar {
+            display: none;
         }
-        ::-webkit-scrollbar-track {
-            background: #080b11;
-        }
-        ::-webkit-scrollbar-thumb {
-            background: #1e2638;
-            border-radius: 4px;
-        }
-        ::-webkit-scrollbar-thumb:hover {
-            background: #374151;
+        .no-scrollbar {
+            -ms-overflow-style: none;
+            scrollbar-width: none;
         }
     </style>
 </head>
 <body class="min-h-screen flex flex-col antialiased selection:bg-indigo-500 selection:text-white">
 
     <!-- TOP NAVIGATION BAR -->
-    <header class="glass-panel sticky top-0 z-50 border-b border-skyrim-border shadow-2xl">
-        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-3 flex flex-wrap items-center justify-between gap-4">
-            <div class="flex items-center space-x-3">
-                <div class="w-9 h-9 rounded-xl bg-indigo-600/20 border border-indigo-500/40 flex items-center justify-center text-indigo-400 shadow-inner">
-                    <i class="fa-solid fa-dragon text-lg"></i>
+    <header class="glass-panel sticky top-0 z-50 border-b border-skyrim-border shadow-xl">
+        <div class="max-w-7xl mx-auto px-3 sm:px-6 lg:px-8 py-2.5 sm:py-3 flex items-center justify-between gap-2">
+            <div class="flex items-center space-x-2 sm:space-x-3">
+                <div class="w-8 h-8 sm:w-9 sm:h-9 rounded-lg sm:rounded-xl bg-indigo-600/20 border border-indigo-500/40 flex items-center justify-center text-indigo-400 shrink-0">
+                    <i class="fa-solid fa-dragon text-base sm:text-lg"></i>
                 </div>
-                <div class="flex items-center gap-2">
-                    <span class="text-xs font-semibold px-2 py-0.5 rounded bg-indigo-500/20 text-indigo-300 border border-indigo-500/30">Skyrim Mod Hub</span>
-                    <span class="text-xs text-slate-400 hidden sm:inline">• Перевод и документация</span>
+                <div>
+                    <h1 class="text-xs sm:text-sm font-bold text-white tracking-wide">OsmelMC Tweaks</h1>
+                    <p class="text-[10px] text-indigo-300 hidden sm:block">Интерактивный справочник</p>
                 </div>
             </div>
 
             <!-- Quick Action Buttons -->
-            <div class="flex items-center gap-2.5 text-xs">
-                <a href="https://www.loverslab.com/files/file/10316-osmelmc-mod-tweaks/" target="_blank" class="px-3 py-1.5 rounded-lg bg-slate-900 hover:bg-slate-800 text-slate-300 border border-skyrim-border transition flex items-center gap-1.5">
-                    <i class="fa-solid fa-arrow-up-right-from-square text-indigo-400"></i> Страница на LoversLab
+            <div class="flex items-center gap-1.5 sm:gap-2 text-xs">
+                <a href="https://www.loverslab.com/files/file/10316-osmelmc-mod-tweaks/" target="_blank" class="px-2.5 py-1.5 rounded-lg bg-slate-900 hover:bg-slate-800 text-slate-300 border border-skyrim-border transition flex items-center gap-1 text-[11px] sm:text-xs">
+                    <i class="fa-solid fa-arrow-up-right-from-square text-indigo-400"></i>
+                    <span class="hidden xs:inline">LoversLab</span>
                 </a>
-                <button onclick="openModal('cleanSystemModal')" class="px-3.5 py-1.5 rounded-lg bg-indigo-600 hover:bg-indigo-500 text-white font-medium transition flex items-center gap-1.5 shadow-md shadow-indigo-600/30">
-                    <i class="fa-solid fa-broom"></i> Clean System
+                <button onclick="openModal('cleanSystemModal')" class="px-2.5 sm:px-3.5 py-1.5 rounded-lg bg-indigo-600 hover:bg-indigo-500 text-white font-semibold transition flex items-center gap-1 text-[11px] sm:text-xs shadow-md shadow-indigo-600/30">
+                    <i class="fa-solid fa-broom"></i>
+                    <span>Clean Guide</span>
                 </button>
             </div>
         </div>
     </header>
 
-    <!-- BIG HERO SECTION WITH PROMINENT TITLE -->
-    <section class="relative overflow-hidden pt-12 pb-10 bg-gradient-to-b from-indigo-950/30 via-skyrim-dark to-skyrim-dark border-b border-skyrim-border">
-        <!-- Background Ambient Glow -->
-        <div class="absolute top-0 left-1/2 -translate-x-1/2 w-3/4 h-64 bg-indigo-600/10 blur-[120px] pointer-events-none"></div>
-
-        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
+    <!-- HERO SECTION -->
+    <section class="relative overflow-hidden pt-6 pb-6 sm:pt-12 sm:pb-10 bg-gradient-to-b from-indigo-950/30 via-skyrim-dark to-skyrim-dark border-b border-skyrim-border px-3 sm:px-6 lg:px-8">
+        <div class="max-w-7xl mx-auto relative z-10">
             
-            <!-- Meta Tag Badges -->
-            <div class="flex flex-wrap items-center gap-2 mb-4">
-                <span class="px-3 py-1 rounded-full bg-amber-500/15 border border-amber-500/30 text-amber-300 text-xs font-semibold flex items-center gap-1.5">
-                    <i class="fa-solid fa-user-gear"></i> Автор: OsmelMC
+            <!-- Meta Badges -->
+            <div class="flex flex-wrap items-center gap-1.5 sm:gap-2 mb-3">
+                <span class="px-2.5 py-0.5 rounded-md bg-amber-500/15 border border-amber-500/30 text-amber-300 text-[10px] sm:text-xs font-semibold">
+                    <i class="fa-solid fa-user-gear mr-1"></i>OsmelMC
                 </span>
-                <span class="px-3 py-1 rounded-full bg-indigo-500/15 border border-indigo-500/30 text-indigo-300 text-xs font-semibold flex items-center gap-1.5">
-                    <i class="fa-regular fa-calendar-check"></i> Версия: 2024-09-22
+                <span class="px-2.5 py-0.5 rounded-md bg-indigo-500/15 border border-indigo-500/30 text-indigo-300 text-[10px] sm:text-xs font-semibold">
+                    <i class="fa-regular fa-calendar-check mr-1"></i>2024-09-22
                 </span>
-                <span class="px-3 py-1 rounded-full bg-emerald-500/15 border border-emerald-500/30 text-emerald-300 text-xs font-semibold flex items-center gap-1.5">
-                    <i class="fa-solid fa-check-double"></i> LE / SE / AE Совместимо
+                <span class="px-2.5 py-0.5 rounded-md bg-emerald-500/15 border border-emerald-500/30 text-emerald-300 text-[10px] sm:text-xs font-semibold">
+                    <i class="fa-solid fa-check-double mr-1"></i>LE / SE / AE
                 </span>
             </div>
 
-            <!-- 1. ГЛАВНОЕ КРУПНОЕ ЗАГЛАВИЕ МОДА -->
-            <h1 class="text-4xl sm:text-6xl md:text-7xl font-bold font-cinzel text-transparent bg-clip-text bg-gradient-to-r from-white via-indigo-100 to-indigo-300 tracking-wide title-glow mb-4 leading-tight">
+            <!-- Title -->
+            <h1 class="text-2xl sm:text-5xl md:text-6xl font-bold font-cinzel text-transparent bg-clip-text bg-gradient-to-r from-white via-indigo-100 to-indigo-300 tracking-wide title-glow mb-2 sm:mb-3 leading-tight break-words">
                 OsmelMC Mod Tweaks
             </h1>
 
-            <p class="text-lg sm:text-xl text-indigo-200/90 font-medium max-w-4xl mb-6">
+            <p class="text-xs sm:text-base text-indigo-200/90 font-medium mb-4 sm:mb-6">
                 Оптимизация, Совместимость и Исправления для SexLab, существ, мебели и связанных модов
             </p>
 
-            <!-- Description Cards Grid -->
-            <div class="grid grid-cols-1 lg:grid-cols-3 gap-4 mb-6">
-                <!-- Info 1 -->
-                <div class="p-4 rounded-2xl bg-slate-900/80 border border-skyrim-border text-xs text-slate-300 leading-relaxed lg:col-span-2 flex items-start gap-3.5">
-                    <div class="w-8 h-8 rounded-xl bg-indigo-600/20 text-indigo-400 flex items-center justify-center shrink-0 text-sm">
-                        <i class="fa-solid fa-layer-group"></i>
-                    </div>
-                    <div>
-                        <b class="text-slate-100 block text-sm mb-1">Комплексная коллекция исправлений:</b>
-                        Сборник твиков устраняет проблемы выравнивания актеров, конфликты ZaZ и Devious Devices, восстанавливает логику нужд NPC, исправляет ошибки ванильных скриптов (USMP) и расширяет возможности анимаций до 1250 слотов.
-                        <div class="mt-2 text-[11px] text-slate-400">
-                            <b>Лицензия:</b> CC BY-SA & GPLv3. Все права принадлежат оригинальным создателям модификаций.
-                        </div>
-                    </div>
+            <!-- Info Cards Grid -->
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-2.5 sm:gap-4">
+                <div class="p-3 sm:p-4 rounded-xl sm:rounded-2xl bg-slate-900/80 border border-skyrim-border text-[11px] sm:text-xs text-slate-300 leading-relaxed md:col-span-2">
+                    <b class="text-slate-100 block text-xs sm:text-sm mb-1">Комплексная коллекция исправлений:</b>
+                    Устраняет проблемы выравнивания актеров, конфликты ZaZ и Devious Devices, восстанавливает ИИ нужд NPC, исправляет ошибки ванильных скриптов (USMP) и расширяет лимит анимаций до 1250.
                 </div>
 
-                <!-- Info 2: Gamer-Mods Clarification -->
-                <div class="p-4 rounded-2xl bg-amber-500/10 border border-amber-500/30 text-xs text-amber-200/90 leading-relaxed flex items-start gap-3.5">
-                    <div class="w-8 h-8 rounded-xl bg-amber-500/20 text-amber-400 flex items-center justify-center shrink-0 text-sm">
-                        <i class="fa-solid fa-circle-question"></i>
-                    </div>
-                    <div>
-                        <b class="text-amber-300 block text-sm mb-1">Справка по Gamer-Mods:</b>
-                        На русскоязычных сайтах этот релиз часто фигурирует под старым названием <i>«SexLab Aroused Redux BakaFactory Edited»</i>. Однако на LoversLab это единый архивный пак, содержащий более 13 разных твиков и SexLab Utility Plus.
-                    </div>
+                <div class="p-3 sm:p-4 rounded-xl sm:rounded-2xl bg-amber-500/10 border border-amber-500/30 text-[11px] sm:text-xs text-amber-200/90 leading-relaxed">
+                    <b class="text-amber-300 block text-xs sm:text-sm mb-1">Справка по Gamer-Mods:</b>
+                    На русскоязычных сайтах этот релиз часто называют <i>«SexLab Aroused Redux BakaFactory Edited»</i>, однако архив включает полный мега-пак из 13+ твиков.
                 </div>
             </div>
 
@@ -155,88 +132,88 @@
     </section>
 
     <!-- MAIN APP CONTENT -->
-    <main class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8 flex-1 w-full">
+    <main class="max-w-7xl mx-auto px-3 sm:px-6 lg:px-8 py-5 sm:py-8 flex-1 w-full">
 
         <!-- SEARCH & CONTROLS TOOLBAR -->
-        <div class="glass-panel p-4 rounded-2xl mb-8 flex flex-col md:flex-row gap-4 justify-between items-center shadow-lg">
+        <div class="glass-panel p-3 sm:p-4 rounded-2xl mb-6 space-y-3 shadow-lg">
             <!-- Search input -->
-            <div class="relative w-full md:w-96">
-                <i class="fa-solid fa-magnifying-glass absolute left-3.5 top-1/2 -translate-y-1/2 text-slate-400 text-sm"></i>
-                <input type="text" id="searchInput" oninput="filterMods()" placeholder="Поиск (напр. мебель, Arousal, Misty, SOS, USMP)..." 
-                       class="w-full pl-10 pr-4 py-2.5 rounded-xl bg-slate-950/80 border border-skyrim-border text-sm text-white placeholder-slate-500 focus:outline-none focus:border-indigo-500 transition shadow-inner">
+            <div class="relative w-full">
+                <i class="fa-solid fa-magnifying-glass absolute left-3.5 top-1/2 -translate-y-1/2 text-slate-400 text-xs sm:text-sm"></i>
+                <input type="text" id="searchInput" oninput="filterMods()" placeholder="Поиск (мебель, Arousal, Misty, SOS, USMP)..." 
+                       class="w-full pl-9 pr-3 py-2 sm:py-2.5 rounded-xl bg-slate-950/90 border border-skyrim-border text-xs sm:text-sm text-white placeholder-slate-500 focus:outline-none focus:border-indigo-500 transition">
             </div>
 
-            <!-- Categories filter buttons -->
-            <div class="flex flex-wrap gap-2 w-full md:w-auto">
-                <button onclick="setCategory('all')" class="cat-btn active px-3.5 py-1.5 rounded-xl text-xs font-semibold bg-indigo-600 text-white transition shadow-md shadow-indigo-600/30">Все моды</button>
-                <button onclick="setCategory('core')" class="cat-btn px-3.5 py-1.5 rounded-xl text-xs font-semibold bg-slate-900/80 hover:bg-slate-800 text-slate-300 border border-skyrim-border transition">SexLab & Фреймворк</button>
-                <button onclick="setCategory('creatures')" class="cat-btn px-3.5 py-1.5 rounded-xl text-xs font-semibold bg-slate-900/80 hover:bg-slate-800 text-slate-300 border border-skyrim-border transition">Arousal & Монстры</button>
-                <button onclick="setCategory('npc_quests')" class="cat-btn px-3.5 py-1.5 rounded-xl text-xs font-semibold bg-slate-900/80 hover:bg-slate-800 text-slate-300 border border-skyrim-border transition">NPC, Нужды & Квесты</button>
-                <button onclick="setCategory('fixes')" class="cat-btn px-3.5 py-1.5 rounded-xl text-xs font-semibold bg-slate-900/80 hover:bg-slate-800 text-slate-300 border border-skyrim-border transition">Оптимизация (USMP)</button>
+            <!-- Categories filter (Scrollable on mobile) -->
+            <div class="flex gap-1.5 overflow-x-auto pb-1 no-scrollbar sm:flex-wrap">
+                <button onclick="setCategory('all')" class="cat-btn active shrink-0 px-3 py-1.5 rounded-lg text-[11px] sm:text-xs font-semibold bg-indigo-600 text-white transition">Все</button>
+                <button onclick="setCategory('core')" class="cat-btn shrink-0 px-3 py-1.5 rounded-lg text-[11px] sm:text-xs font-semibold bg-slate-900 text-slate-300 border border-skyrim-border transition">SexLab & Ядро</button>
+                <button onclick="setCategory('creatures')" class="cat-btn shrink-0 px-3 py-1.5 rounded-lg text-[11px] sm:text-xs font-semibold bg-slate-900 text-slate-300 border border-skyrim-border transition">Монстры & Arousal</button>
+                <button onclick="setCategory('npc_quests')" class="cat-btn shrink-0 px-3 py-1.5 rounded-lg text-[11px] sm:text-xs font-semibold bg-slate-900 text-slate-300 border border-skyrim-border transition">NPC & Квесты</button>
+                <button onclick="setCategory('fixes')" class="cat-btn shrink-0 px-3 py-1.5 rounded-lg text-[11px] sm:text-xs font-semibold bg-slate-900 text-slate-300 border border-skyrim-border transition">USMP Оптимизация</button>
             </div>
         </div>
 
         <!-- SPECIAL FEATURED CARD: SEXLAB UTILITY PLUS -->
-        <div id="sluCard" class="mod-item mb-8 glass-panel border border-indigo-500/40 rounded-3xl overflow-hidden shadow-2xl transition" data-category="core" data-keywords="sexlab utility plus slu мебель furniture zaz devious ddi ahegao 1250 anims hidden place">
-            <div class="p-6 sm:p-8 bg-gradient-to-r from-indigo-950/50 via-skyrim-card to-skyrim-card">
-                <div class="flex flex-wrap items-start justify-between gap-4 mb-4">
+        <div id="sluCard" class="mod-item mb-6 glass-panel border border-indigo-500/40 rounded-2xl sm:rounded-3xl overflow-hidden shadow-xl" data-category="core" data-keywords="sexlab utility plus slu мебель furniture zaz devious ddi ahegao 1250 anims hidden place">
+            <div class="p-4 sm:p-6 lg:p-8 bg-gradient-to-r from-indigo-950/50 via-skyrim-card to-skyrim-card">
+                <div class="flex flex-col sm:flex-row sm:items-start justify-between gap-3 mb-3 sm:mb-4">
                     <div>
-                        <div class="flex flex-wrap items-center gap-2 mb-2">
-                            <span class="px-2.5 py-0.5 rounded-md bg-indigo-500/20 text-indigo-300 text-xs font-bold border border-indigo-500/40">Флагманский модуль</span>
-                            <span class="px-2.5 py-0.5 rounded-md bg-emerald-500/20 text-emerald-300 text-xs font-semibold">LE 1.62 / SE 1.63 / AE 1.66b</span>
-                            <span class="px-2.5 py-0.5 rounded-md bg-amber-500/20 text-amber-300 text-xs font-semibold">Extra: 1250 анимаций</span>
+                        <div class="flex flex-wrap items-center gap-1.5 mb-1.5">
+                            <span class="px-2 py-0.5 rounded bg-indigo-500/20 text-indigo-300 text-[10px] sm:text-xs font-bold border border-indigo-500/40">Главный модуль</span>
+                            <span class="px-2 py-0.5 rounded bg-emerald-500/20 text-emerald-300 text-[10px] sm:text-xs font-semibold">LE / SE / AE (1.66b)</span>
+                            <span class="px-2 py-0.5 rounded bg-amber-500/20 text-amber-300 text-[10px] sm:text-xs font-semibold">1250 слотов</span>
                         </div>
-                        <h3 class="text-2xl sm:text-3xl font-bold font-cinzel text-white">SexLab Utility Plus (SLU+)</h3>
-                        <p class="text-xs sm:text-sm text-indigo-200/80 mt-1">Комплексное исправление анимационного движка, привязка к мебели и фильтрация ZaZ / DDi</p>
+                        <h3 class="text-lg sm:text-2xl font-bold font-cinzel text-white">SexLab Utility Plus (SLU+)</h3>
+                        <p class="text-[11px] sm:text-xs text-indigo-200/80 mt-0.5">Исправление движка, автопривязка к мебели и фильтрация ZaZ / DDi</p>
                     </div>
-                    <button onclick="toggleCard('sluDetails', this)" class="px-4 py-2.5 rounded-xl bg-indigo-600/30 hover:bg-indigo-600/50 text-indigo-200 text-xs font-semibold border border-indigo-500/50 transition flex items-center gap-2 shadow-lg">
-                        <span>Параметры и MCM меню</span>
-                        <i class="fa-solid fa-chevron-down transition-transform duration-300"></i>
+                    <button onclick="toggleCard('sluDetails', this)" class="w-full sm:w-auto px-3.5 py-2 rounded-xl bg-indigo-600/30 hover:bg-indigo-600/50 text-indigo-200 text-xs font-semibold border border-indigo-500/50 transition flex items-center justify-center gap-2">
+                        <span>Параметры и MCM</span>
+                        <i class="fa-solid fa-chevron-down transition-transform duration-300 text-xs"></i>
                     </button>
                 </div>
 
-                <!-- Key highlights -->
-                <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-3 text-xs mb-4">
-                    <div class="p-3.5 rounded-2xl bg-slate-900/70 border border-skyrim-border">
-                        <div class="text-indigo-400 font-bold mb-1"><i class="fa-solid fa-couch mr-1.5"></i> Умная мебель</div>
-                        <p class="text-slate-300">Автопоиск стульев, тронов, скамей, столов, верстаков и стоек ZaZ.</p>
+                <!-- SLU Highlights -->
+                <div class="grid grid-cols-2 lg:grid-cols-4 gap-2 text-[11px] sm:text-xs mb-3">
+                    <div class="p-2.5 sm:p-3 rounded-xl bg-slate-900/70 border border-skyrim-border">
+                        <div class="text-indigo-400 font-bold mb-0.5"><i class="fa-solid fa-couch mr-1"></i> Мебель</div>
+                        <p class="text-slate-300 text-[10px] sm:text-xs leading-tight">Стулья, троны, столы, стойки ZaZ.</p>
                     </div>
-                    <div class="p-3.5 rounded-2xl bg-slate-900/70 border border-skyrim-border">
-                        <div class="text-cyan-400 font-bold mb-1"><i class="fa-solid fa-shield-halved mr-1.5"></i> Фильтры ZaZ & DDi</div>
-                        <p class="text-slate-300">Исключает несовместимые позы до старта сцены, ускоряя запуск на 70%.</p>
+                    <div class="p-2.5 sm:p-3 rounded-xl bg-slate-900/70 border border-skyrim-border">
+                        <div class="text-cyan-400 font-bold mb-0.5"><i class="fa-solid fa-shield-halved mr-1"></i> ZaZ & DDi</div>
+                        <p class="text-slate-300 text-[10px] sm:text-xs leading-tight">Старт сцен быстрее на 70%.</p>
                     </div>
-                    <div class="p-3.5 rounded-2xl bg-slate-900/70 border border-skyrim-border">
-                        <div class="text-emerald-400 font-bold mb-1"><i class="fa-solid fa-user-secret mr-1.5"></i> Укромные места</div>
-                        <p class="text-slate-300">Возможность уйти в закрытую зону, если секс в людных местах запрещен.</p>
+                    <div class="p-2.5 sm:p-3 rounded-xl bg-slate-900/70 border border-skyrim-border">
+                        <div class="text-emerald-400 font-bold mb-0.5"><i class="fa-solid fa-user-secret mr-1"></i> Укрытия</div>
+                        <p class="text-slate-300 text-[10px] sm:text-xs leading-tight">Секс без штрафов за прилюдность.</p>
                     </div>
-                    <div class="p-3.5 rounded-2xl bg-slate-900/70 border border-skyrim-border">
-                        <div class="text-pink-400 font-bold mb-1"><i class="fa-solid fa-face-flushed mr-1.5"></i> HDT-SMP Ahegao</div>
-                        <p class="text-slate-300">10 ахегао-выражений с физикой языков и гибким контролем стонов.</p>
+                    <div class="p-2.5 sm:p-3 rounded-xl bg-slate-900/70 border border-skyrim-border">
+                        <div class="text-pink-400 font-bold mb-0.5"><i class="fa-solid fa-face-flushed mr-1"></i> Ахегао</div>
+                        <p class="text-slate-300 text-[10px] sm:text-xs leading-tight">10 выражений с физикой SMP.</p>
                     </div>
                 </div>
 
-                <!-- Collapsible SLU details -->
-                <div id="sluDetails" class="hidden pt-5 border-t border-skyrim-border text-xs space-y-4">
-                    <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
-                        <div class="p-4 rounded-2xl bg-slate-950/60 border border-skyrim-border space-y-2">
-                            <h4 class="font-bold text-slate-200 text-sm flex items-center gap-2">
+                <!-- SLU Collapsible -->
+                <div id="sluDetails" class="hidden pt-3 border-t border-skyrim-border text-[11px] sm:text-xs space-y-3">
+                    <div class="grid grid-cols-1 md:grid-cols-2 gap-3">
+                        <div class="p-3 rounded-xl bg-slate-950/60 border border-skyrim-border space-y-1.5">
+                            <h4 class="font-bold text-slate-200 text-xs sm:text-sm flex items-center gap-1.5">
                                 <i class="fa-solid fa-sliders text-indigo-400"></i> Функции фильтрации в MCM:
                             </h4>
-                            <ul class="list-disc list-inside text-slate-300 space-y-1.5">
-                                <li><b>Filter Gender Tags:</b> Защита от некорректных поз (например, МxМ с тегом Vaginal). Поддержка Futa и страпонов.</li>
-                                <li><b>Filter Fetish Tags:</b> Позы магов, вампиров, алхимиков и некро-позы открываются только соответствующим персонажам.</li>
-                                <li><b>FadeToBlack:</b> Эффект плавного затемнения при телепортации актеров на старте.</li>
-                                <li><b>Strip Editor (%):</b> Процентный шанс раздевания для каждого отдельного элемента брони.</li>
+                            <ul class="list-disc list-inside text-slate-300 space-y-1">
+                                <li><b>Filter Gender Tags:</b> Защита от некорректных поз. Поддержка Futa и страпонов.</li>
+                                <li><b>Filter Fetish Tags:</b> Магические, вампирские и некро-позы строго по ролям.</li>
+                                <li><b>FadeToBlack:</b> Затемнение при телепортации актеров на старте.</li>
+                                <li><b>Strip Editor (%):</b> Процентный шанс снятия предметов брони.</li>
                             </ul>
                         </div>
-                        <div class="p-4 rounded-2xl bg-slate-950/60 border border-skyrim-border space-y-2">
-                            <h4 class="font-bold text-slate-200 text-sm flex items-center gap-2">
+                        <div class="p-3 rounded-xl bg-slate-950/60 border border-skyrim-border space-y-1.5">
+                            <h4 class="font-bold text-slate-200 text-xs sm:text-sm flex items-center gap-1.5">
                                 <i class="fa-solid fa-puzzle-piece text-cyan-400"></i> Требования и установка:
                             </h4>
-                            <div class="text-slate-300 space-y-1.5 leading-relaxed">
-                                <div>• <b>Требуется для мебели:</b> <code>powerofthree's Papyrus Extender</code> + <code>PapyrusUtil</code>.</div>
-                                <div>• <b>Рекомендуется:</b> <code>Expressive Facial Animation</code>, <code>Papyrus Tweaks NG</code>.</div>
-                                <div>• <b>Совместимость:</b> Полностью совместим с <i>SexLab Separate Orgasm (SLSO)</i> (перезаписать SLSO файлами из SLU+) и <i>Survival Open Mouth</i>.</div>
+                            <div class="text-slate-300 space-y-1">
+                                <div>• <b>Для мебели:</b> <code>Papyrus Extender</code> + <code>PapyrusUtil</code>.</div>
+                                <div>• <b>Рекомендуется:</b> <code>Expressive Facial Animation</code>.</div>
+                                <div>• <b>Совместимость:</b> SLSO (перезаписать файлами SLU+) и Survival Open Mouth.</div>
                             </div>
                         </div>
                     </div>
@@ -244,243 +221,243 @@
             </div>
         </div>
 
-        <!-- MODS GRID (ALL 13 ITEMS) -->
-        <div id="modsContainer" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+        <!-- MODS GRID -->
+        <div id="modsContainer" class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-3.5 sm:gap-6">
 
             <!-- 1. SexLab Aroused Creatures -->
-            <div class="mod-item glass-panel rounded-3xl p-5 border border-skyrim-border flex flex-col justify-between hover:border-amber-500/40 transition shadow-lg" 
+            <div class="mod-item glass-panel rounded-2xl sm:rounded-3xl p-4 sm:p-5 border border-skyrim-border flex flex-col justify-between hover:border-amber-500/40 transition shadow-md" 
                  data-category="creatures" data-keywords="sexlab aroused creatures монстры существа лошади horse sd+ perversion le se">
                 <div>
-                    <div class="flex items-center justify-between gap-2 mb-3">
-                        <span class="text-xs font-bold px-2.5 py-0.5 rounded-lg bg-amber-500/20 text-amber-300 border border-amber-500/30">#1 Существа</span>
-                        <span class="text-[11px] text-slate-400">v04.06 / LE Beta 10</span>
+                    <div class="flex items-center justify-between gap-2 mb-2">
+                        <span class="text-[10px] sm:text-xs font-bold px-2 py-0.5 rounded bg-amber-500/20 text-amber-300 border border-amber-500/30">#1 Существа</span>
+                        <span class="text-[10px] sm:text-[11px] text-slate-400">v04.06 / LE Beta 10</span>
                     </div>
-                    <h4 class="text-base font-bold text-white mb-2">SexLab Aroused Creatures</h4>
-                    <p class="text-xs text-slate-300 leading-relaxed mb-3">
-                        Поддержка сцен «Существо x Существо», интеграция с SD+ (ползание = призыв), учет развратности жертвы и расчет габаритов/силы монстров (курицы больше не могут нападать).
+                    <h4 class="text-sm sm:text-base font-bold text-white mb-1.5">SexLab Aroused Creatures</h4>
+                    <p class="text-[11px] sm:text-xs text-slate-300 leading-relaxed mb-3">
+                        Сцены «Существо x Существо», совместимость с SD+ (ползание = призыв), учет развратности жертвы и расчет габаритов/силы монстров (курицы больше не нападают).
                     </p>
                 </div>
-                <div class="pt-3 border-t border-skyrim-border text-[11px] text-slate-400 space-y-1">
-                    <div><b>Опция:</b> «Female Horse also Refuse» (настройка покорности кобыл).</div>
-                    <div><b>Установка:</b> Требует оригинальный SE-мод даже для LE. Запустить FNIS.</div>
+                <div class="pt-2.5 border-t border-skyrim-border text-[10px] sm:text-[11px] text-slate-400 space-y-0.5">
+                    <div><b>Опция:</b> «Female Horse also Refuse» (покорность кобыл).</div>
+                    <div><b>Установка:</b> Требует оригинал SE даже для LE. Запустить FNIS.</div>
                 </div>
             </div>
 
             <!-- 2. SexLab Aroused v28b -->
-            <div class="mod-item glass-panel rounded-3xl p-5 border border-skyrim-border flex flex-col justify-between hover:border-indigo-500/40 transition shadow-lg" 
+            <div class="mod-item glass-panel rounded-2xl sm:rounded-3xl p-4 sm:p-5 border border-skyrim-border flex flex-col justify-between hover:border-indigo-500/40 transition shadow-md" 
                  data-category="creatures" data-keywords="sexlab aroused возбуждение virgin девственность orgasms bakafactory">
                 <div>
-                    <div class="flex items-center justify-between gap-2 mb-3">
-                        <span class="text-xs font-bold px-2.5 py-0.5 rounded-lg bg-indigo-500/20 text-indigo-300 border border-indigo-500/30">#2 Возбуждение</span>
-                        <span class="text-[11px] text-slate-400">v28b</span>
+                    <div class="flex items-center justify-between gap-2 mb-2">
+                        <span class="text-[10px] sm:text-xs font-bold px-2 py-0.5 rounded bg-indigo-500/20 text-indigo-300 border border-indigo-500/30">#2 Возбуждение</span>
+                        <span class="text-[10px] sm:text-[11px] text-slate-400">v28b</span>
                     </div>
-                    <h4 class="text-base font-bold text-white mb-2">SexLab Aroused Tweaks</h4>
-                    <p class="text-xs text-slate-300 leading-relaxed mb-3">
-                        Контроль «Сексуальной невинности» (Sexual Purity): удерживает уровень возбуждения девственников ниже 36, защищая от спонтанных домогательств из сторонних модов.
+                    <h4 class="text-sm sm:text-base font-bold text-white mb-1.5">SexLab Aroused Tweaks</h4>
+                    <p class="text-[11px] sm:text-xs text-slate-300 leading-relaxed mb-3">
+                        Защита невинности: удерживает уровень возбуждения девственников ниже 36, предотвращая домогательства сторонних модов до потери девственности.
                     </p>
                 </div>
-                <div class="pt-3 border-t border-skyrim-border text-[11px] text-slate-400 space-y-1">
-                    <div><b>Функция:</b> Отслеживание событий оргазма каждого актера в сцене.</div>
+                <div class="pt-2.5 border-t border-skyrim-border text-[10px] sm:text-[11px] text-slate-400 space-y-0.5">
+                    <div><b>Функция:</b> Отслеживание оргазма каждого участника.</div>
                     <div><b>Совместимость:</b> Работает на LE и SE.</div>
                 </div>
             </div>
 
             <!-- 3. Private Needs Discreet -->
-            <div class="mod-item glass-panel rounded-3xl p-5 border border-skyrim-border flex flex-col justify-between hover:border-emerald-500/40 transition shadow-lg" 
+            <div class="mod-item glass-panel rounded-2xl sm:rounded-3xl p-4 sm:p-5 border border-skyrim-border flex flex-col justify-between hover:border-emerald-500/40 transition shadow-md" 
                  data-category="npc_quests" data-keywords="private needs discreet pnd нужды туалет дебаффы bathing">
                 <div>
-                    <div class="flex items-center justify-between gap-2 mb-3">
-                        <span class="text-xs font-bold px-2.5 py-0.5 rounded-lg bg-emerald-500/20 text-emerald-300 border border-emerald-500/30">#3 Потребности</span>
-                        <span class="text-[11px] text-slate-400">v1.20</span>
+                    <div class="flex items-center justify-between gap-2 mb-2">
+                        <span class="text-[10px] sm:text-xs font-bold px-2 py-0.5 rounded bg-emerald-500/20 text-emerald-300 border border-emerald-500/30">#3 Потребности</span>
+                        <span class="text-[10px] sm:text-[11px] text-slate-400">v1.20</span>
                     </div>
-                    <h4 class="text-base font-bold text-white mb-2">Private Needs Discreet</h4>
-                    <p class="text-xs text-slate-300 leading-relaxed mb-3">
-                        Исправление ИИ неписей (ходят в туалет вовремя), корректное раздевание/одевание, интеграция с Bathing in Skyrim и диалог-просьба к спутнику справить нужду.
+                    <h4 class="text-sm sm:text-base font-bold text-white mb-1.5">Private Needs Discreet</h4>
+                    <p class="text-[11px] sm:text-xs text-slate-300 leading-relaxed mb-3">
+                        NPC справляют нужды вовремя. Корректное раздевание/одевание, интеграция с Bathing in Skyrim и диалог-просьба к спутнику справить нужду.
                     </p>
                 </div>
-                <div class="pt-3 border-t border-skyrim-border text-[11px] text-slate-400 space-y-1">
-                    <div><b>Дебаффы:</b> Вздутие (>95% кишечника → штраф скорости), Отек (>95% пузыря → штраф магии/сил).</div>
+                <div class="pt-2.5 border-t border-skyrim-border text-[10px] sm:text-[11px] text-slate-400 space-y-0.5">
+                    <div><b>Дебаффы:</b> Вздутие (>95% кишечника → -скорость), Отек (>95% пузыря → -магия/сил).</div>
                     <div><b>Установка:</b> Полная замена файла PND v1.9, запуск FNIS.</div>
                 </div>
             </div>
 
             <!-- 4. SOS Pubic Hair Addon -->
-            <div class="mod-item glass-panel rounded-3xl p-5 border border-skyrim-border flex flex-col justify-between hover:border-purple-500/40 transition shadow-lg" 
+            <div class="mod-item glass-panel rounded-2xl sm:rounded-3xl p-4 sm:p-5 border border-skyrim-border flex flex-col justify-between hover:border-purple-500/40 transition shadow-md" 
                  data-category="core" data-keywords="sos pubic hair волосы bodyslide himbo futa cbbe uunp coco">
                 <div>
-                    <div class="flex items-center justify-between gap-2 mb-3">
-                        <span class="text-xs font-bold px-2.5 py-0.5 rounded-lg bg-purple-500/20 text-purple-300 border border-purple-500/30">#4 Тело и Меши</span>
-                        <span class="text-[11px] text-slate-400">LE / SE</span>
+                    <div class="flex items-center justify-between gap-2 mb-2">
+                        <span class="text-[10px] sm:text-xs font-bold px-2 py-0.5 rounded bg-purple-500/20 text-purple-300 border border-purple-500/30">#4 Тело и Меши</span>
+                        <span class="text-[10px] sm:text-[11px] text-slate-400">LE / SE</span>
                     </div>
-                    <h4 class="text-base font-bold text-white mb-2">SOS Pubic Hair Tinting</h4>
-                    <p class="text-xs text-slate-300 leading-relaxed mb-3">
-                        Скриптовое окрашивание 3D-мешей интимных волос под натуральный цвет волос персонажа. Поддержка HIMBO, TRX Futa и BodySlide для CBBE, UUNP и COCO.
+                    <h4 class="text-sm sm:text-base font-bold text-white mb-1.5">SOS Pubic Hair Tinting</h4>
+                    <p class="text-[11px] sm:text-xs text-slate-300 leading-relaxed mb-3">
+                        Скриптовое окрашивание 3D-мешей интимных волос под натуральный цвет волос персонажа. Поддержка HIMBO, TRX Futa и BodySlide для CBBE/UUNP/COCO.
                     </p>
                 </div>
-                <div class="pt-3 border-t border-skyrim-border text-[11px] text-slate-400 space-y-1">
-                    <div><b>Требование:</b> Оригинальный SE аддон + генерация BodySlide.</div>
+                <div class="pt-2.5 border-t border-skyrim-border text-[10px] sm:text-[11px] text-slate-400 space-y-0.5">
+                    <div><b>Требование:</b> Оригинал SE + генерация BodySlide.</div>
                 </div>
             </div>
 
             <!-- 5. Milk Mod Economy -->
-            <div class="mod-item glass-panel rounded-3xl p-5 border border-skyrim-border flex flex-col justify-between hover:border-cyan-500/40 transition shadow-lg" 
+            <div class="mod-item glass-panel rounded-2xl sm:rounded-3xl p-4 sm:p-5 border border-skyrim-border flex flex-col justify-between hover:border-cyan-500/40 transition shadow-md" 
                  data-category="npc_quests" data-keywords="milk mod economy молоко lactacid rnd hearthfire">
                 <div>
-                    <div class="flex items-center justify-between gap-2 mb-3">
-                        <span class="text-xs font-bold px-2.5 py-0.5 rounded-lg bg-cyan-500/20 text-cyan-300 border border-cyan-500/30">#5 Экономика</span>
-                        <span class="text-[11px] text-slate-400">Твик</span>
+                    <div class="flex items-center justify-between gap-2 mb-2">
+                        <span class="text-[10px] sm:text-xs font-bold px-2 py-0.5 rounded bg-cyan-500/20 text-cyan-300 border border-cyan-500/30">#5 Экономика</span>
+                        <span class="text-[10px] sm:text-[11px] text-slate-400">Твик</span>
                     </div>
-                    <h4 class="text-base font-bold text-white mb-2">Milk Mod Economy</h4>
-                    <p class="text-xs text-slate-300 leading-relaxed mb-3">
-                        Реалистичный вес для разной жирности молока. Лактацид восстанавливает очки сна в Realistic Needs and Diseases (RND). Суккубы больше не дают бутылки со спермой.
+                    <h4 class="text-sm sm:text-base font-bold text-white mb-1.5">Milk Mod Economy</h4>
+                    <p class="text-[11px] sm:text-xs text-slate-300 leading-relaxed mb-3">
+                        Реалистичный вес для разной жирности молока. Лактацид восстанавливает очки сна в RND. Суккубы больше не дают бутылки со спермой.
                     </p>
                 </div>
-                <div class="pt-3 border-t border-skyrim-border text-[11px] text-slate-400 space-y-1">
-                    <div><b>Рецепты:</b> Скорректированы рецепты для дополнения Hearthfire.</div>
+                <div class="pt-2.5 border-t border-skyrim-border text-[10px] sm:text-[11px] text-slate-400 space-y-0.5">
+                    <div><b>Рецепты:</b> Исправлены рецепты для Hearthfire.</div>
                 </div>
             </div>
 
             <!-- 6. SLATE -->
-            <div class="mod-item glass-panel rounded-3xl p-5 border border-skyrim-border flex flex-col justify-between hover:border-indigo-500/40 transition shadow-lg" 
+            <div class="mod-item glass-panel rounded-2xl sm:rounded-3xl p-4 sm:p-5 border border-skyrim-border flex flex-col justify-between hover:border-indigo-500/40 transition shadow-md" 
                  data-category="core" data-keywords="slate теги тегирование анимации creatures мебель logs">
                 <div>
-                    <div class="flex items-center justify-between gap-2 mb-3">
-                        <span class="text-xs font-bold px-2.5 py-0.5 rounded-lg bg-indigo-500/20 text-indigo-300 border border-indigo-500/30">#6 Тегирование</span>
-                        <span class="text-[11px] text-slate-400">Патч</span>
+                    <div class="flex items-center justify-between gap-2 mb-2">
+                        <span class="text-[10px] sm:text-xs font-bold px-2 py-0.5 rounded bg-indigo-500/20 text-indigo-300 border border-indigo-500/30">#6 Тегирование</span>
+                        <span class="text-[10px] sm:text-[11px] text-slate-400">Патч</span>
                     </div>
-                    <h4 class="text-base font-bold text-white mb-2">SLATE (Animation Tag Editor)</h4>
-                    <p class="text-xs text-slate-300 leading-relaxed mb-3">
-                        Добавлена поддержка существ и мебели, полная синхронизация тегов с SexLab Utility Plus. Ускорена обработка логов (ActionLog) с отображением прогресса.
+                    <h4 class="text-sm sm:text-base font-bold text-white mb-1.5">SLATE (Animation Tags)</h4>
+                    <p class="text-[11px] sm:text-xs text-slate-300 leading-relaxed mb-3">
+                        Поддержка монстров и мебели, синхронизация тегов с SexLab Utility Plus. Ускорена обработка файлов ActionLog с отображением прогресса.
                     </p>
                 </div>
-                <div class="pt-3 border-t border-skyrim-border text-[11px] text-slate-400 space-y-1">
-                    <div><b>Совместимость:</b> Для SE требуется распаковка BSA оригинала от BeamerMiasma.</div>
+                <div class="pt-2.5 border-t border-skyrim-border text-[10px] sm:text-[11px] text-slate-400 space-y-0.5">
+                    <div><b>Для SE:</b> Требуется распаковка BSA оригинала.</div>
                 </div>
             </div>
 
             <!-- 7. SexLab Adventures -->
-            <div class="mod-item glass-panel rounded-3xl p-5 border border-skyrim-border flex flex-col justify-between hover:border-amber-500/40 transition shadow-lg" 
+            <div class="mod-item glass-panel rounded-2xl sm:rounded-3xl p-4 sm:p-5 border border-skyrim-border flex flex-col justify-between hover:border-amber-500/40 transition shadow-md" 
                  data-category="npc_quests" data-keywords="sexlab adventures rape struggle насилие сопротивление коллизии">
                 <div>
-                    <div class="flex items-center justify-between gap-2 mb-3">
-                        <span class="text-xs font-bold px-2.5 py-0.5 rounded-lg bg-amber-500/20 text-amber-300 border border-amber-500/30">#7 Геймплей</span>
-                        <span class="text-[11px] text-slate-400">Твик</span>
+                    <div class="flex items-center justify-between gap-2 mb-2">
+                        <span class="text-[10px] sm:text-xs font-bold px-2 py-0.5 rounded bg-amber-500/20 text-amber-300 border border-amber-500/30">#7 Геймплей</span>
+                        <span class="text-[10px] sm:text-[11px] text-slate-400">Твик</span>
                     </div>
-                    <h4 class="text-base font-bold text-white mb-2">SexLab Adventures</h4>
-                    <p class="text-xs text-slate-300 leading-relaxed mb-3">
-                        Добавлена опция «None» для раздевания при нападении, улучшена регистрация коллизий сближения и расчет сопротивления на основе массы и силы актеров.
+                    <h4 class="text-sm sm:text-base font-bold text-white mb-1.5">SexLab Adventures</h4>
+                    <p class="text-[11px] sm:text-xs text-slate-300 leading-relaxed mb-3">
+                        Опция «None» для раздевания при нападении, улучшенная регистрация коллизий и расчет сопротивления на основе массы и силы персонажей.
                     </p>
                 </div>
-                <div class="pt-3 border-t border-skyrim-border text-[11px] text-slate-400 space-y-1">
-                    <div><b>Требование:</b> Оригинальный мод SexLab Adventures.</div>
+                <div class="pt-2.5 border-t border-skyrim-border text-[10px] sm:text-[11px] text-slate-400 space-y-0.5">
+                    <div><b>Требование:</b> Оригинал SexLab Adventures.</div>
                 </div>
             </div>
 
             <!-- 8. FNIS Sexy Move -->
-            <div class="mod-item glass-panel rounded-3xl p-5 border border-skyrim-border flex flex-col justify-between hover:border-purple-500/40 transition shadow-lg" 
+            <div class="mod-item glass-panel rounded-2xl sm:rounded-3xl p-4 sm:p-5 border border-skyrim-border flex flex-col justify-between hover:border-purple-500/40 transition shadow-md" 
                  data-category="core" data-keywords="fnis sexy move походка zaz devious devices анимации">
                 <div>
-                    <div class="flex items-center justify-between gap-2 mb-3">
-                        <span class="text-xs font-bold px-2.5 py-0.5 rounded-lg bg-purple-500/20 text-purple-300 border border-purple-500/30">#8 Анимации</span>
-                        <span class="text-[11px] text-slate-400">Патч</span>
+                    <div class="flex items-center justify-between gap-2 mb-2">
+                        <span class="text-[10px] sm:text-xs font-bold px-2 py-0.5 rounded bg-purple-500/20 text-purple-300 border border-purple-500/30">#8 Анимации</span>
+                        <span class="text-[10px] sm:text-[11px] text-slate-400">Патч</span>
                     </div>
-                    <h4 class="text-base font-bold text-white mb-2">FNIS Sexy Move Patch</h4>
-                    <p class="text-xs text-slate-300 leading-relaxed mb-3">
-                        Совместимость с Devious Devices и ZaZ: женские походки больше не конфликтуют со скованными анимациями ходьбы при надетых устройствах.
+                    <h4 class="text-sm sm:text-base font-bold text-white mb-1.5">FNIS Sexy Move Patch</h4>
+                    <p class="text-[11px] sm:text-xs text-slate-300 leading-relaxed mb-3">
+                        Совместимость с Devious Devices и ZaZ: женская походка больше не сбивает скованные анимации передвижения в бандаже.
                     </p>
                 </div>
-                <div class="pt-3 border-t border-skyrim-border text-[11px] text-slate-400 space-y-1">
-                    <div><b>Источник:</b> Требуется оригинал с Nexus Mods.</div>
+                <div class="pt-2.5 border-t border-skyrim-border text-[10px] sm:text-[11px] text-slate-400 space-y-0.5">
+                    <div><b>Источник:</b> Оригинальный мод с Nexus Mods.</div>
                 </div>
             </div>
 
             <!-- 9. Conditional Expressions -->
-            <div class="mod-item glass-panel rounded-3xl p-5 border border-skyrim-border flex flex-col justify-between hover:border-indigo-500/40 transition shadow-lg" 
+            <div class="mod-item glass-panel rounded-2xl sm:rounded-3xl p-4 sm:p-5 border border-skyrim-border flex flex-col justify-between hover:border-indigo-500/40 transition shadow-md" 
                  data-category="core" data-keywords="conditional expressions мимика лица эмоции mfg sexlab">
                 <div>
-                    <div class="flex items-center justify-between gap-2 mb-3">
-                        <span class="text-xs font-bold px-2.5 py-0.5 rounded-lg bg-indigo-500/20 text-indigo-300 border border-indigo-500/30">#9 Мимика</span>
-                        <span class="text-[11px] text-slate-400">v1.27 Patch</span>
+                    <div class="flex items-center justify-between gap-2 mb-2">
+                        <span class="text-[10px] sm:text-xs font-bold px-2 py-0.5 rounded bg-indigo-500/20 text-indigo-300 border border-indigo-500/30">#9 Мимика</span>
+                        <span class="text-[10px] sm:text-[11px] text-slate-400">v1.27 Patch</span>
                     </div>
-                    <h4 class="text-base font-bold text-white mb-2">Conditional Expressions</h4>
-                    <p class="text-xs text-slate-300 leading-relaxed mb-3">
-                        Обеспечивает корректную совместную работу выражений лиц Conditional Expressions с анимационным генератором мимики SexLab.
+                    <h4 class="text-sm sm:text-base font-bold text-white mb-1.5">Conditional Expressions</h4>
+                    <p class="text-[11px] sm:text-xs text-slate-300 leading-relaxed mb-3">
+                        Обеспечивает корректную совместную работу выражений лиц мода с генератором мимики SexLab.
                     </p>
                 </div>
-                <div class="pt-3 border-t border-skyrim-border text-[11px] text-slate-400 space-y-1">
-                    <div><b>Источник:</b> Требуется оригинал с Nexus Mods.</div>
+                <div class="pt-2.5 border-t border-skyrim-border text-[10px] sm:text-[11px] text-slate-400 space-y-0.5">
+                    <div><b>Источник:</b> Оригинальный мод с Nexus Mods.</div>
                 </div>
             </div>
 
             <!-- 10. SOS PapyrusUtil Edition -->
-            <div class="mod-item glass-panel rounded-3xl p-5 border border-skyrim-border flex flex-col justify-between hover:border-emerald-500/40 transition shadow-lg" 
+            <div class="mod-item glass-panel rounded-2xl sm:rounded-3xl p-4 sm:p-5 border border-skyrim-border flex flex-col justify-between hover:border-emerald-500/40 transition shadow-md" 
                  data-category="core" data-keywords="schlongs of skyrim sos papyrusutil spid uncloaked futa dll-free le se ae vr">
                 <div>
-                    <div class="flex items-center justify-between gap-2 mb-3">
-                        <span class="text-xs font-bold px-2.5 py-0.5 rounded-lg bg-emerald-500/20 text-emerald-300 border border-emerald-500/30">#10 Универсальный SOS</span>
-                        <span class="text-[11px] text-slate-400">LE / SE / VR / AE</span>
+                    <div class="flex items-center justify-between gap-2 mb-2">
+                        <span class="text-[10px] sm:text-xs font-bold px-2 py-0.5 rounded bg-emerald-500/20 text-emerald-300 border border-emerald-500/30">#10 SOS без DLL</span>
+                        <span class="text-[10px] sm:text-[11px] text-slate-400">LE / SE / VR / AE</span>
                     </div>
-                    <h4 class="text-base font-bold text-white mb-2">SOS (PapyrusUtil Edition)</h4>
-                    <p class="text-xs text-slate-300 leading-relaxed mb-3">
-                        Работает без DLL-зависимостей на любых версиях Skyrim (включая свежие патчи AE). Включает Futa-аддон от Sly9er, совместимость со SPID от SOS Uncloaked и фикс экипировки.
+                    <h4 class="text-sm sm:text-base font-bold text-white mb-1.5">SOS (PapyrusUtil Edition)</h4>
+                    <p class="text-[11px] sm:text-xs text-slate-300 leading-relaxed mb-3">
+                        Работает без DLL-зависимостей на любых версиях игры (включая последние AE). Поддержка Futa от Sly9er, совместимость со SPID от SOS Uncloaked и фикс экипировки.
                     </p>
                 </div>
-                <div class="pt-3 border-t border-skyrim-border text-[11px] text-slate-400 space-y-1">
-                    <div><b>Совет:</b> При смене режимов сбросьте аддоны через SOS MCM.</div>
+                <div class="pt-2.5 border-t border-skyrim-border text-[10px] sm:text-[11px] text-slate-400 space-y-0.5">
+                    <div><b>Совет:</b> При смене режимов сбросьте аддоны в MCM.</div>
                 </div>
             </div>
 
             <!-- 11. Mia's Lair / Sex Slaves -->
-            <div class="mod-item glass-panel rounded-3xl p-5 border border-skyrim-border flex flex-col justify-between hover:border-pink-500/40 transition shadow-lg" 
+            <div class="mod-item glass-panel rounded-2xl sm:rounded-3xl p-4 sm:p-5 border border-skyrim-border flex flex-col justify-between hover:border-pink-500/40 transition shadow-md" 
                  data-category="npc_quests" data-keywords="sex slaves mias lair логово мии рабство devious zaz идгрод">
                 <div>
-                    <div class="flex items-center justify-between gap-2 mb-3">
-                        <span class="text-xs font-bold px-2.5 py-0.5 rounded-lg bg-pink-500/20 text-pink-300 border border-pink-500/30">#11 Квест / Рабство</span>
-                        <span class="text-[11px] text-slate-400">v7.1</span>
+                    <div class="flex items-center justify-between gap-2 mb-2">
+                        <span class="text-[10px] sm:text-xs font-bold px-2 py-0.5 rounded bg-pink-500/20 text-pink-300 border border-pink-500/30">#11 Квест / Рабство</span>
+                        <span class="text-[10px] sm:text-[11px] text-slate-400">v7.1</span>
                     </div>
-                    <h4 class="text-base font-bold text-white mb-2">Sex Slaves or Mia's Lair</h4>
-                    <p class="text-xs text-slate-300 leading-relaxed mb-3">
-                        Возвращена поддержка ZaZ, оптимизированы слоты пирсинга и пробок для Devious Devices. Заклинание Экстаза делает вас законным владельцем рабов. Письмо ярла Идгрод требует дружбы с ней.
+                    <h4 class="text-sm sm:text-base font-bold text-white mb-1.5">Sex Slaves or Mia's Lair</h4>
+                    <p class="text-[11px] sm:text-xs text-slate-300 leading-relaxed mb-3">
+                        Возвращена поддержка ZaZ, оптимизированы слоты пирсинга для Devious Devices. Заклинание Экстаза назначает игрока владельцем рабов. Письмо ярла требует дружбы с ней.
                     </p>
                 </div>
-                <div class="pt-3 border-t border-skyrim-border text-[11px] text-slate-400 space-y-1">
+                <div class="pt-2.5 border-t border-skyrim-border text-[10px] sm:text-[11px] text-slate-400 space-y-0.5">
                     <div><b>Совместимость:</b> Для SE и AE версий с SexLab.</div>
                 </div>
             </div>
 
             <!-- 12. Misty Skye SexLab Addon -->
-            <div class="mod-item glass-panel rounded-3xl p-5 border border-skyrim-border flex flex-col justify-between hover:border-pink-500/40 transition shadow-lg" 
+            <div class="mod-item glass-panel rounded-2xl sm:rounded-3xl p-4 sm:p-5 border border-skyrim-border flex flex-col justify-between hover:border-pink-500/40 transition shadow-md" 
                  data-category="npc_quests" data-keywords="misty skye мисти скай компаньон bodyslide coco uunp массаж тренировки">
                 <div>
-                    <div class="flex items-center justify-between gap-2 mb-3">
-                        <span class="text-xs font-bold px-2.5 py-0.5 rounded-lg bg-pink-500/20 text-pink-300 border border-pink-500/30">#12 Компаньон</span>
-                        <span class="text-[11px] text-slate-400">v7.2 Update</span>
+                    <div class="flex items-center justify-between gap-2 mb-2">
+                        <span class="text-[10px] sm:text-xs font-bold px-2 py-0.5 rounded bg-pink-500/20 text-pink-300 border border-pink-500/30">#12 Компаньон</span>
+                        <span class="text-[10px] sm:text-[11px] text-slate-400">v7.2 Update</span>
                     </div>
-                    <h4 class="text-base font-bold text-white mb-2">Misty Skye — SexLab Addon</h4>
-                    <p class="text-xs text-slate-300 leading-relaxed mb-3">
-                        Пресеты BodySlide (UUNP / COCO Body_B). Новая система тренировок за золото и секс (прокачка оружия), реальный массаж в конце 1-го квеста и фикс проклятия плоского тела.
+                    <h4 class="text-sm sm:text-base font-bold text-white mb-1.5">Misty Skye — SexLab Addon</h4>
+                    <p class="text-[11px] sm:text-xs text-slate-300 leading-relaxed mb-3">
+                        Пресеты BodySlide (UUNP/COCO). Тренировки за золото и секс (прокачка оружия), реальный массаж в конце 1-го квеста и фикс проклятия плоского тела.
                     </p>
                 </div>
-                <div class="pt-3 border-t border-skyrim-border text-[11px] text-slate-400 space-y-1">
+                <div class="pt-2.5 border-t border-skyrim-border text-[10px] sm:text-[11px] text-slate-400 space-y-0.5">
                     <div><b>Требование:</b> Мод Misty Skye версии 7.0+ (Nexus).</div>
                 </div>
             </div>
 
             <!-- 13. USMP - My Fix -->
-            <div class="mod-item glass-panel rounded-3xl p-5 border border-cyan-500/50 flex flex-col justify-between hover:border-cyan-400 transition shadow-lg" 
+            <div class="mod-item glass-panel rounded-2xl sm:rounded-3xl p-4 sm:p-5 border border-cyan-500/50 flex flex-col justify-between hover:border-cyan-400 transition shadow-md" 
                  data-category="fixes" data-keywords="usmp unofficial skyrim modders patch производительность вылеты ctd dragonborn драконы">
                 <div>
-                    <div class="flex items-center justify-between gap-2 mb-3">
-                        <span class="text-xs font-bold px-2.5 py-0.5 rounded-lg bg-cyan-500/20 text-cyan-300 border border-cyan-500/30">#13 Оптимизация</span>
-                        <span class="text-[11px] text-slate-400">2024-09-22</span>
+                    <div class="flex items-center justify-between gap-2 mb-2">
+                        <span class="text-[10px] sm:text-xs font-bold px-2 py-0.5 rounded bg-cyan-500/20 text-cyan-300 border border-cyan-500/30">#13 Оптимизация</span>
+                        <span class="text-[10px] sm:text-[11px] text-slate-400">2024-09-22</span>
                     </div>
-                    <h4 class="text-base font-bold text-white mb-2">USMP — My Fix (Performance)</h4>
-                    <p class="text-xs text-slate-300 leading-relaxed mb-3">
-                        Комплексный фикс ванильных скриптов: предотвращает CTD, обеспечивает плавный полет на драконах, ускоряет квесты Солстхейма (Dragonborn) и разгружает стек Papyrus.
+                    <h4 class="text-sm sm:text-base font-bold text-white mb-1.5">USMP — My Fix (Performance)</h4>
+                    <p class="text-[11px] sm:text-xs text-slate-300 leading-relaxed mb-3">
+                        Исправление ванильных скриптов: предотвращает CTD, обеспечивает плавный полет на драконах, ускоряет Солстхейм (Dragonborn) и разгружает Papyrus Stack.
                     </p>
                 </div>
-                <div class="pt-3 border-t border-skyrim-border text-[11px] text-slate-400 space-y-1">
-                    <div><b>Особенность:</b> Включает FOMOD установщик для LE и SE/AE.</div>
+                <div class="pt-2.5 border-t border-skyrim-border text-[10px] sm:text-[11px] text-slate-400 space-y-0.5">
+                    <div><b>FOMOD:</b> Включает установщик для LE и SE/AE.</div>
                     <div><b>Требуется:</b> Unofficial Skyrim Modder's Patch.</div>
                 </div>
             </div>
@@ -488,142 +465,31 @@
         </div>
 
         <!-- QUICK STEP-BY-STEP INSTALL CHECKLIST -->
-        <section class="mt-12 glass-panel p-6 sm:p-8 rounded-3xl border border-skyrim-border shadow-xl">
-            <div class="max-w-3xl mb-6">
-                <h3 class="text-2xl font-bold font-cinzel text-white mb-1">Порядок установки и обновления</h3>
-                <p class="text-xs sm:text-sm text-slate-300">
+        <section class="mt-8 sm:mt-12 glass-panel p-4 sm:p-8 rounded-2xl sm:rounded-3xl border border-skyrim-border shadow-xl">
+            <div class="mb-4 sm:mb-6">
+                <h3 class="text-base sm:text-2xl font-bold font-cinzel text-white mb-1">Порядок установки и обновления</h3>
+                <p class="text-[11px] sm:text-xs text-slate-300">
                     Обязательные шаги для корректной работы сборки твиков на вашем сохранении:
                 </p>
             </div>
 
-            <div class="grid grid-cols-1 md:grid-cols-3 gap-4">
-                <div class="p-4 rounded-2xl bg-slate-900/80 border border-skyrim-border flex items-start gap-3.5">
-                    <div class="w-8 h-8 rounded-xl bg-indigo-600/20 border border-indigo-500/40 text-indigo-400 flex items-center justify-center font-bold text-sm shrink-0">1</div>
-                    <div class="text-xs">
-                        <div class="font-bold text-white mb-1">Приоритет в Mod Organizer</div>
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-2.5 sm:gap-4">
+                <div class="p-3 sm:p-4 rounded-xl sm:rounded-2xl bg-slate-900/80 border border-skyrim-border flex items-start gap-3">
+                    <div class="w-7 h-7 sm:w-8 sm:h-8 rounded-lg sm:rounded-xl bg-indigo-600/20 border border-indigo-500/40 text-indigo-400 flex items-center justify-center font-bold text-xs sm:text-sm shrink-0">1</div>
+                    <div class="text-[11px] sm:text-xs">
+                        <div class="font-bold text-white mb-0.5">Приоритет в Mod Organizer</div>
                         <p class="text-slate-400">Твики OsmelMC должны перезаписывать файлы оригиналов (SexLab, SOS, ZaZ, SLSO, DDi).</p>
                     </div>
                 </div>
-                <div class="p-4 rounded-2xl bg-slate-900/80 border border-skyrim-border flex items-start gap-3.5">
-                    <div class="w-8 h-8 rounded-xl bg-indigo-600/20 border border-indigo-500/40 text-indigo-400 flex items-center justify-center font-bold text-sm shrink-0">2</div>
-                    <div class="text-xs">
-                        <div class="font-bold text-white mb-1">Генерация FNIS / Nemesis</div>
+                <div class="p-3 sm:p-4 rounded-xl sm:rounded-2xl bg-slate-900/80 border border-skyrim-border flex items-start gap-3">
+                    <div class="w-7 h-7 sm:w-8 sm:h-8 rounded-lg sm:rounded-xl bg-indigo-600/20 border border-indigo-500/40 text-indigo-400 flex items-center justify-center font-bold text-xs sm:text-sm shrink-0">2</div>
+                    <div class="text-[11px] sm:text-xs">
+                        <div class="font-bold text-white mb-0.5">Генерация FNIS / Nemesis</div>
                         <p class="text-slate-400">При установке аддонов для монстров и потребностей всегда запускайте генератор анимаций.</p>
                     </div>
                 </div>
-                <div class="p-4 rounded-2xl bg-slate-900/80 border border-skyrim-border flex items-start gap-3.5">
-                    <div class="w-8 h-8 rounded-xl bg-indigo-600/20 border border-indigo-500/40 text-indigo-400 flex items-center justify-center font-bold text-sm shrink-0">3</div>
-                    <div class="text-xs">
-                        <div class="font-bold text-white mb-1">Сброс реестра MCM</div>
-                        <p class="text-slate-400">В игре зайдите в MCM SexLab и нажмите <b>Reset Animation Registry</b> для подгрузки тегов мебели.</p>
-                    </div>
-                </div>
-            </div>
-        </section>
-
-    </main>
-
-    <!-- FOOTER -->
-    <footer class="border-t border-skyrim-border py-8 bg-slate-950 text-center text-xs text-slate-500">
-        <div class="max-w-7xl mx-auto px-4 space-y-2">
-            <p class="text-slate-400 font-medium">OsmelMC Mod Tweaks Knowledge Base • Релиз 2024-09-22</p>
-            <p>Оригинальный автор твиков: <span class="text-indigo-400">OsmelMC</span> (LoversLab). Оформление адаптировано для русскоязычных игроков.</p>
-        </div>
-    </footer>
-
-    <!-- MODAL: CLEAN SYSTEM GUIDE -->
-    <div id="cleanSystemModal" class="fixed inset-0 bg-black/80 backdrop-blur-md z-50 hidden flex items-center justify-center p-4">
-        <div class="glass-panel w-full max-w-lg rounded-3xl p-6 sm:p-8 border border-indigo-500/40 shadow-2xl relative">
-            <button onclick="closeModal('cleanSystemModal')" class="absolute top-5 right-5 text-slate-400 hover:text-white text-lg">
-                <i class="fa-solid fa-xmark"></i>
-            </button>
-            <div class="flex items-center gap-3.5 mb-4">
-                <div class="w-11 h-11 rounded-2xl bg-indigo-600/20 text-indigo-400 flex items-center justify-center text-xl shadow-inner">
-                    <i class="fa-solid fa-broom"></i>
-                </div>
-                <div>
-                    <h3 class="text-xl font-bold font-cinzel text-white">Инструкция «Clean System»</h3>
-                    <p class="text-xs text-slate-400">Безопасное обновление и переход на Extra-версию</p>
-                </div>
-            </div>
-
-            <ol class="list-decimal list-inside space-y-2.5 text-xs text-slate-300 mb-6 pl-1 leading-relaxed">
-                <li>Загрузите ваше сохранение в игре.</li>
-                <li>Откройте <b>MCM меню SexLab</b> и перейдите на последнюю вкладку.</li>
-                <li>Нажмите кнопку <b>Export Configuration</b> (Экспорт настроек).</li>
-                <li>Нажмите кнопку <b>Clean System</b> (Очистка системы).</li>
-                <li>Подождите 2–3 минуты, не закрывая игру, пока процесс очистки не завершится.</li>
-                <li>Нажмите <b>Import Configuration</b> (Импорт настроек) для возврата ваших опций.</li>
-                <li>Сделайте новое ручное сохранение игры.</li>
-            </ol>
-
-            <div class="p-3.5 rounded-2xl bg-amber-500/15 border border-amber-500/30 text-xs text-amber-300 mb-5 leading-relaxed">
-                <i class="fa-solid fa-triangle-exclamation mr-1.5"></i> <b>Важно:</b> Не пропускайте этот шаг при обновлении на Extra-версию, чтобы избежать сбоев масштаба персонажей (уменьшение до микро-размеров).
-            </div>
-
-            <button onclick="closeModal('cleanSystemModal')" class="w-full py-3 rounded-xl bg-indigo-600 hover:bg-indigo-500 text-white text-xs font-bold transition shadow-lg shadow-indigo-600/30">
-                Закрыть инструкцию
-            </button>
-        </div>
-    </div>
-
-    <!-- JAVASCRIPT -->
-    <script>
-        let currentCategory = 'all';
-
-        function setCategory(cat) {
-            currentCategory = cat;
-            document.querySelectorAll('.cat-btn').forEach(btn => {
-                btn.classList.remove('bg-indigo-600', 'text-white', 'shadow-md', 'shadow-indigo-600/30');
-                btn.classList.add('bg-slate-900/80', 'text-slate-300');
-            });
-            event.target.classList.add('bg-indigo-600', 'text-white', 'shadow-md', 'shadow-indigo-600/30');
-            event.target.classList.remove('bg-slate-900/80', 'text-slate-300');
-            filterMods();
-        }
-
-        function filterMods() {
-            const query = document.getElementById('searchInput').value.toLowerCase().trim();
-            const cards = document.querySelectorAll('.mod-item');
-
-            cards.forEach(card => {
-                const category = card.getAttribute('data-category');
-                const keywords = card.getAttribute('data-keywords') || '';
-                const text = card.innerText.toLowerCase();
-
-                const matchesCat = (currentCategory === 'all' || category === currentCategory);
-                const matchesSearch = (text.includes(query) || keywords.toLowerCase().includes(query));
-
-                if (matchesCat && matchesSearch) {
-                    card.classList.remove('hidden');
-                } else {
-                    card.classList.add('hidden');
-                }
-            });
-        }
-
-        function toggleCard(elementId, btn) {
-            const el = document.getElementById(elementId);
-            const icon = btn.querySelector('.fa-chevron-down');
-            if (el.classList.contains('hidden')) {
-                el.classList.remove('hidden');
-                if (icon) icon.style.transform = 'rotate(180deg)';
-            } else {
-                el.classList.add('hidden');
-                if (icon) icon.style.transform = 'rotate(0deg)';
-            }
-        }
-
-        function openModal(id) {
-            document.getElementById(id).classList.remove('hidden');
-        }
-        function closeModal(id) {
-            document.getElementById(id).classList.add('hidden');
-        }
-
-        document.addEventListener('keydown', (e) => {
-            if (e.key === 'Escape') closeModal('cleanSystemModal');
-        });
-    </script>
-</body>
-</html>
+                <div class="p-3 sm:p-4 rounded-xl sm:rounded-2xl bg-slate-900/80 border border-skyrim-border flex items-start gap-3">
+                    <div class="w-7 h-7 sm:w-8 sm:h-8 rounded-lg sm:rounded-xl bg-indigo-600/20 border border-indigo-500/40 text-indigo-400 flex items-center justify-center font-bold text-xs sm:text-sm shrink-0">3</div>
+                    <div class="text-[11px] sm:text-xs">
+                        <div class="font-bold text-white mb-0.5">Сброс реестра MCM</div>
+                        <p class="text-s
